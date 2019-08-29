@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <cstdio>
+#include <cstring>
 #include <random>
 
 // ----------------------------------------------------------------------------
@@ -22,6 +23,30 @@ namespace hmdf
 #    undef max
 #  endif // max
 #endif // WIN32 || _WIN32
+
+// ----------------------------------------------------------------------------
+
+template<typename S, typename T>
+inline static S &_write_json_df_index_(S &o, const T &value)  {
+
+    return (o << value);
+}
+
+// -------------------------------------
+
+template<typename S>
+inline static S &_write_json_df_index_(S &o, const DateTime &value)  {
+
+    return (o << value.time() << '.' << value.nanosec());
+}
+
+// -------------------------------------
+
+template<typename S>
+inline static S &_write_json_df_index_(S &o, const std::string &value)  {
+
+    return (o << '"' << value << '"');
+}
 
 // ----------------------------------------------------------------------------
 
